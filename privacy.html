@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personvernerklæring — Haul</title>
+  <meta name="description" content="Personvernerklæring for Haul-appen.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #080F1C;
+      color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #93C3E0;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+
+    .back:hover {
+      color: #DCEEFA;
+    }
+
+    .back svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .updated {
+      font-size: 13px;
+      color: #93C3E0;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 17px;
+      font-weight: 600;
+      color: #DCEEFA;
+      margin-top: 36px;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #DCEEFA;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #DCEEFA;
+      margin-bottom: 12px;
+    }
+
+    strong {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 12px;
+    }
+
+    ul li {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #DCEEFA;
+      padding-left: 16px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #243F5C;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+    }
+
+    th, td {
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid #243F5C;
+    }
+
+    th {
+      color: #93C3E0;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    td {
+      color: #DCEEFA;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: #243F5C;
+      margin: 32px 0;
+    }
+
+    a {
+      color: #E8A42A;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 40px 20px 60px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a href="/" class="back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Tilbake
+    </a>
+
+    <h1>Personvernerklæring for Haul</h1>
+    <p class="updated">Sist oppdatert: august 2026</p>
+
+    <hr>
+
+    <h2>1. Behandlingsansvarlig</h2>
+    <p>Anders Bjelland<br>E-post: <a href="mailto:contact@haul.fish">contact@haul.fish</a></p>
+
+    <hr>
+
+    <h2>2. Hvilke opplysninger vi samler inn</h2>
+    <p>Vi samler inn følgende opplysninger når du bruker Haul:</p>
+
+    <p><strong>Kontoopplysninger</strong></p>
+    <ul>
+      <li>Navn og e-postadresse (ved registrering)</li>
+    </ul>
+
+    <p><strong>Posisjonsdata</strong></p>
+    <ul>
+      <li>GPS-koordinater for utsetting og trekking av redskap — lagres i databasen koblet til din konto</li>
+      <li>Din sanntidsposisjon i bakgrunnen — brukes utelukkende på selve enheten for å sjekke om du er nær redskapet ditt (se avsnitt 3). Denne posisjonen sendes aldri til våre servere.</li>
+    </ul>
+
+    <p><strong>Fangstregistreringer</strong></p>
+    <ul>
+      <li>Art, antall, vekt og størrelse på fangst du registrerer</li>
+      <li>Dato og tidspunkt for utsetting og trekking</li>
+      <li>Dyp, bunntype og andre miljøopplysninger du legger inn</li>
+    </ul>
+
+    <p><strong>Mannskapsopplysninger</strong></p>
+    <ul>
+      <li>Navn på mannskap i ditt fiskebruk. Mannskap er andre Haul-brukere med egne kontoer som er invitert til ditt fiskebruk.</li>
+    </ul>
+
+    <p><strong>Profilbilder</strong></p>
+    <ul>
+      <li>Profilbilde (avatar) du eventuelt laster opp for din brukerkonto og dine fiskebruk. Bildene er tilgjengelige via en direkte URL og lagres permanent koblet til din konto.</li>
+    </ul>
+
+    <p><strong>Tekniske opplysninger</strong></p>
+    <ul>
+      <li>Feilmeldinger og tilbakemeldinger du sender oss via appen</li>
+    </ul>
+
+    <p>Vi samler ikke inn betalingsinformasjon eller helseopplysninger.</p>
+
+    <hr>
+
+    <h2>3. Formål og rettslig grunnlag</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Formål</th>
+          <th>Rettslig grunnlag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lagre og vise dine fangstregistreringer og redskapslogg</td>
+          <td>Avtale (GDPR art. 6 nr. 1 b)</td>
+        </tr>
+        <tr>
+          <td>Vise kart med posisjon for ditt redskap</td>
+          <td>Avtale (GDPR art. 6 nr. 1 b)</td>
+        </tr>
+        <tr>
+          <td>Sende deg varsler om redskap på overtid</td>
+          <td>Samtykke (GDPR art. 6 nr. 1 a)</td>
+        </tr>
+        <tr>
+          <td>Varsle deg når du er nær redskapet ditt (nærhetsfunksjon)</td>
+          <td>Samtykke (GDPR art. 6 nr. 1 a)</td>
+        </tr>
+        <tr>
+          <td>Håndtere din brukerkonto</td>
+          <td>Avtale (GDPR art. 6 nr. 1 b)</td>
+        </tr>
+        <tr>
+          <td>Forbedre appen basert på tilbakemeldinger</td>
+          <td>Berettiget interesse (GDPR art. 6 nr. 1 f)</td>
+        </tr>
+        <tr>
+          <td>Utarbeide anonymisert statistikk til marin forskning</td>
+          <td>Berettiget interesse (GDPR art. 6 nr. 1 f)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Om «Vis vei»-funksjonen</h3>
+    <p>Når du aktiverer «Vis vei» for et redskap, bruker Haul posisjonen din til å beregne avstand og retning til redskapet i sanntid. Denne beregningen skjer utelukkende lokalt på din enhet — posisjonen din overføres ikke til våre servere. Funksjonen er brukerinitiiert og avsluttes når du lukker navigasjonen.</p>
+    <p>Du kan når som helst trekke tilbake posisjonstilgang under <strong>Innstillinger → Haul → Posisjon</strong> på iPhone.</p>
+
+    <hr>
+
+    <h2>4. Deling av opplysninger</h2>
+    <p>Vi selger ikke dine personopplysninger og deler dem ikke med tredjeparter for markedsføringsformål.</p>
+    <p>Opplysninger deles kun med:</p>
+    <ul>
+      <li><strong>Supabase Inc.</strong> — databaseleverandør. Data lagres i EU (Vest-Europa). Supabase opptrer som databehandler og er underlagt databehandleravtale.</li>
+      <li><strong>Expo / Expo Push Notification Service</strong> — for å sende deg push-varsler (f.eks. varsler når mannskap trekker redskap, og invitasjoner til fiskebruk). Expo behandler kun en anonym push-token, ikke innholdet i varselet.</li>
+      <li><strong>Apple</strong> — for distribusjon av appen via App Store og levering av push-varsler via APNs, i henhold til Apples egne vilkår.</li>
+      <li><strong>Google</strong> — hvis du velger å logge inn med Google, behandler Google autentiseringsdata i henhold til Googles egne vilkår.</li>
+      <li><strong>Sentry</strong> — feilrapporteringstjeneste som mottar tekniske feilmeldinger og stack traces for å hjelpe oss å forbedre appen. Disse kan i noen tilfeller inneholde tekniske brukerdata.</li>
+      <li><strong>Mapbox</strong> — kartrenderingsmotor. Mapbox SDK sender bruksstatistikk og kartinteraksjonsdata til Mapbox i henhold til Mapbox sine egne vilkår. Selve kartflisene hentes fra Kartverket, ikke fra Mapbox.</li>
+    </ul>
+    <p>Vi kan i fremtiden dele anonymisert og aggregert fangststatistikk med forskningsinstitusjoner (f.eks. Havforskningsinstituttet) til bruk i marin forskning og bestandsvurderinger. Slik statistikk vil ikke inneholde navn, e-post, GPS-koordinater eller andre opplysninger som kan knyttes til enkeltpersoner. Vi vil oppdatere denne erklæringen dersom slik deling innføres.</p>
+    <p>Hvis du er med i et felles fiskebruk i appen, kan ditt mannskap og fangstdata være synlig for andre brukere i samme fiskebruk.</p>
+
+    <hr>
+
+    <h2>5. Lagring og sletting</h2>
+    <p>Opplysningene lagres så lenge du har en aktiv konto hos oss.</p>
+    <p>Du kan når som helst slette kontoen din direkte i appen under <strong>Profil → Slett konto</strong>. Ved sletting fjernes alle dine personopplysninger permanent fra våre systemer innen 30 dager.</p>
+    <p>Anonymiserte fangstregistreringer (art, antall, vekt, dybde, bunntype, redskapstype og fylke — uten GPS, bruker-ID, eksakte datoer eller annen identifiserende informasjon) kan beholdes etter at kontoen er slettet, og kan brukes i marin forskning.</p>
+
+    <hr>
+
+    <h2>6. Dine rettigheter</h2>
+    <p>Du har rett til å:</p>
+    <ul>
+      <li><strong>Innsyn</strong> — be om en kopi av opplysningene vi har om deg</li>
+      <li><strong>Retting</strong> — be om at feilaktige opplysninger rettes</li>
+      <li><strong>Sletting</strong> — be om at opplysningene dine slettes ("retten til å bli glemt")</li>
+      <li><strong>Dataportabilitet</strong> — motta opplysningene dine i et maskinlesbart format</li>
+      <li><strong>Trekke tilbake samtykke</strong> — for eksempel slå av posisjonstilgang i iPhone-innstillingene, eller slå av varsler i appens innstillinger</li>
+      <li><strong>Klage</strong> — til Datatilsynet (www.datatilsynet.no) hvis du mener vi behandler opplysningene dine i strid med personvernregelverket</li>
+    </ul>
+    <p>For å utøve rettighetene dine, ta kontakt på <a href="mailto:contact@haul.fish">contact@haul.fish</a>.</p>
+
+    <hr>
+
+    <h2>7. Informasjonssikkerhet</h2>
+    <p>Alle data overføres kryptert (HTTPS/TLS). Tilgang til databasen er begrenset og styrt av tilgangskontrollregler (Row Level Security). Passord lagres ikke i klartekst. Din sanntidsposisjon behandles aldri på våre servere.</p>
+
+    <hr>
+
+    <h2>8. Barn</h2>
+    <p>Appen er ikke rettet mot barn under 13 år. Vi samler ikke bevisst inn opplysninger fra barn.</p>
+
+    <hr>
+
+    <h2>9. Endringer i personvernserklæringen</h2>
+    <p>Vi kan oppdatere denne erklæringen fra tid til annen. Vesentlige endringer varsles i appen. Datoen øverst i dokumentet viser når erklæringen sist ble oppdatert.</p>
+
+    <hr>
+
+    <h2>10. Kontakt</h2>
+    <p>Spørsmål om personvern kan rettes til:<br>Anders Bjelland<br>E-post: <a href="mailto:contact@haul.fish">contact@haul.fish</a></p>
+  </div>
+</body>
+</html>
