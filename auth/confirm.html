@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bekreft e-post – Haul</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src https://qdfebprtistzoxrtuewf.supabase.co; style-src 'self' 'unsafe-inline'; img-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src https://qdfebprtistzoxrtuewf.supabase.co; style-src 'self' 'unsafe-inline'; img-src 'self'">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <style>
@@ -197,7 +197,7 @@
       }
 
       // Validate token_hash format: hex string, 64-128 chars
-      if (!tokenHash || !type || !/^[a-f0-9]{64,128}$/i.test(tokenHash) || type !== 'signup') {
+      if (!tokenHash || !type || !/^(pkce_)?[a-f0-9]{32,128}$/i.test(tokenHash) || type !== 'signup') {
         show('state-error');
         return;
       }
