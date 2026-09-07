@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bekreft e-post – Haul</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src https://qdfebprtistzoxrtuewf.supabase.co; style-src 'self' 'unsafe-inline'; img-src 'self'">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #080F1C;
+      color: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .logo { width: 64px; height: 64px; margin-bottom: 14px; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+    .brand-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #E8A42A;
+    }
+    .brand-name {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 9px;
+      color: #E8A42A;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #0F1A2E;
+      border: 1px solid rgba(147, 195, 224, 0.12);
+      border-radius: 12px;
+      padding: 32px 28px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #FFFFFF;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #93C3E0;
+      line-height: 1.5;
+    }
+
+    .success-msg {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .success-msg .check {
+      width: 56px; height: 56px;
+      background: rgba(34, 197, 94, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 28px;
+      color: #22C55E;
+    }
+    .success-msg h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .success-msg p {
+      font-size: 14px;
+      color: #93C3E0;
+      line-height: 1.5;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 24px 0;
+    }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid rgba(232, 164, 42, 0.2);
+      border-top-color: #E8A42A;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text { font-size: 14px; color: #93C3E0; }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      background: transparent;
+      color: #93C3E0;
+      border: 1px solid rgba(147, 195, 224, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(147, 195, 224, 0.08); }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <img src="/assets/logo-transparent.png" alt="Haul" class="logo">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <span class="brand-name">HAUL</span>
+    </div>
+
+    <div class="card">
+      <!-- State: Loading -->
+      <div id="state-loading" class="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Bekrefter e-postadressen...</div>
+      </div>
+
+      <!-- State: Mobile redirect -->
+      <div id="state-mobile" class="hidden">
+        <div class="loading">
+          <div class="spinner"></div>
+          <div class="loading-text">Åpner appen...</div>
+        </div>
+        <button class="btn-secondary" id="btn-continue-web">Fortsett i nettleseren</button>
+      </div>
+
+      <!-- State: Success -->
+      <div id="state-success" class="hidden">
+        <div class="success-msg">
+          <div class="check">&#10003;</div>
+          <h2>E-postadressen er bekreftet</h2>
+          <p>Du kan nå logge inn i Haul-appen.</p>
+        </div>
+      </div>
+
+      <!-- State: Error -->
+      <div id="state-error" class="hidden">
+        <h1>Lenken er ugyldig</h1>
+        <p class="subtitle" id="error-detail">Lenken kan v&aelig;re utl&oslash;pt eller allerede brukt. Pr&oslash;v &aring; logge inn i appen &mdash; om e-posten ikke er bekreftet, kan du sende en ny lenke derfra.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    (function() {
+      var SUPABASE_URL = 'https://qdfebprtistzoxrtuewf.supabase.co';
+      var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZmVicHJ0aXN0em94cnR1ZXdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NjcwNjAsImV4cCI6MjA5MTU0MzA2MH0.pArYILIAXBifQrmBqJrqlpnbo-hewtpZQ70tjOW-MSQ';
+
+      var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false }
+      });
+
+      var params = new URLSearchParams(window.location.search);
+      var tokenHash = params.get('token_hash');
+      var type = params.get('type');
+
+      function show(id) {
+        ['state-loading', 'state-mobile', 'state-success', 'state-error'].forEach(function(s) {
+          document.getElementById(s).classList.add('hidden');
+        });
+        document.getElementById(id).classList.remove('hidden');
+      }
+
+      function showError(msg) {
+        document.getElementById('error-detail').textContent = msg;
+        show('state-error');
+      }
+
+      // Validate token_hash format: hex string, 64-128 chars
+      if (!tokenHash || !type || !/^[a-f0-9]{64,128}$/i.test(tokenHash) || type !== 'signup') {
+        show('state-error');
+        return;
+      }
+
+      // Check if mobile — try deep link first
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        show('state-mobile');
+        var deepLink = 'haul:///confirm-email?token_hash=' + encodeURIComponent(tokenHash) + '&type=signup';
+        window.location.href = deepLink;
+
+        var continueBtn = document.getElementById('btn-continue-web');
+        setTimeout(function() {
+          continueBtn.style.display = 'block';
+        }, 1500);
+
+        continueBtn.addEventListener('click', function() {
+          verifyEmail();
+        });
+      } else {
+        verifyEmail();
+      }
+
+      function verifyEmail() {
+        show('state-loading');
+        client.auth.verifyOtp({ token_hash: tokenHash, type: 'signup' }).then(function(result) {
+          if (result.error) {
+            if (result.error.message && result.error.message.indexOf('expired') !== -1) {
+              showError('Lenken har utl\u00f8pt. Pr\u00f8v \u00e5 logge inn i appen for \u00e5 sende en ny lenke.');
+            } else {
+              showError('Lenken er ugyldig eller allerede brukt. Pr\u00f8v \u00e5 logge inn i appen.');
+            }
+            return;
+          }
+
+          // Sign out — session should not persist in browser
+          client.auth.signOut();
+          show('state-success');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
