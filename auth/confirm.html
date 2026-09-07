@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bekreft e-post – Haul</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src https://qdfebprtistzoxrtuewf.supabase.co; style-src 'self' 'unsafe-inline'; img-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src https://qdfebprtistzoxrtuewf.supabase.co https://yxaiedlxovpbqstjmnah.supabase.co; style-src 'self' 'unsafe-inline'; img-src 'self'">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <style>
@@ -173,8 +173,13 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script>
     (function() {
-      var SUPABASE_URL = 'https://qdfebprtistzoxrtuewf.supabase.co';
-      var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZmVicHJ0aXN0em94cnR1ZXdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NjcwNjAsImV4cCI6MjA5MTU0MzA2MH0.pArYILIAXBifQrmBqJrqlpnbo-hewtpZQ70tjOW-MSQ';
+      var ENV = new URLSearchParams(window.location.search).get('env');
+      var SUPABASE_URL = ENV === 'dev'
+        ? 'https://yxaiedlxovpbqstjmnah.supabase.co'
+        : 'https://qdfebprtistzoxrtuewf.supabase.co';
+      var SUPABASE_ANON_KEY = ENV === 'dev'
+        ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl4YWllZGx4b3ZwYnFzdGptbmFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NzQ0MTUsImV4cCI6MjA5NTE1MDQxNX0.tacw9Bv8BIR8BUw7EFDyBzPZv5k_oaIaXBPXBq2T1JQ'
+        : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZmVicHJ0aXN0em94cnR1ZXdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NjcwNjAsImV4cCI6MjA5MTU0MzA2MH0.pArYILIAXBifQrmBqJrqlpnbo-hewtpZQ70tjOW-MSQ';
 
       var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: { persistSession: false, autoRefreshToken: false }
