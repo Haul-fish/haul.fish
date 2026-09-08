@@ -212,17 +212,19 @@
 
       if (isMobile) {
         show('state-mobile');
-        var deepLink = 'haul:///confirm-email?token_hash=' + encodeURIComponent(tokenHash) + '&type=signup';
+        var scheme = ENV === 'dev' ? 'haul-dev' : 'haul';
+        var deepLink = scheme + ':///confirm-email?token_hash=' + encodeURIComponent(tokenHash) + '&type=signup&env=' + (ENV || 'prod');
         window.location.href = deepLink;
 
         var continueBtn = document.getElementById('btn-continue-web');
-        setTimeout(function() {
-          continueBtn.style.display = 'block';
-        }, 1500);
-
         continueBtn.addEventListener('click', function() {
           verifyEmail();
         });
+
+        // Auto-fallback to web form after 2.5s if app didn't open
+        setTimeout(function() {
+          verifyEmail();
+        }, 2500);
       } else {
         verifyEmail();
       }
