@@ -228,7 +228,7 @@
           // E-post bekreftet — åpne appen (ingen token trengs, appen oppdaterer sesjonen)
           show('state-mobile');
           var scheme = ENV === 'dev' ? 'haul-dev' : 'haul';
-          window.location.href = scheme + ':///email-confirmed';
+          window.location.href = scheme + ':///confirm-email?verified=true';
 
           // "Fortsett i nettleseren" viser bare suksess (e-post er allerede bekreftet)
           document.getElementById('btn-continue-web').addEventListener('click', function() {
