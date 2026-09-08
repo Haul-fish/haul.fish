@@ -221,8 +221,8 @@
           return;
         }
 
-        // Sign out — session should not persist in browser
-        client.auth.signOut();
+        // Sign out locally — do NOT revoke server-side tokens (would invalidate the app's session)
+        client.auth.signOut({ scope: 'local' });
 
         if (isMobile) {
           // E-post bekreftet — åpne appen (ingen token trengs, appen oppdaterer sesjonen)
