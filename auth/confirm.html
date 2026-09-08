@@ -207,45 +207,42 @@
         return;
       }
 
-      // Check if mobile — try deep link first
       var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-      if (isMobile) {
-        show('state-mobile');
-        var scheme = ENV === 'dev' ? 'haul-dev' : 'haul';
-        var deepLink = scheme + ':///confirm-email?token_hash=' + encodeURIComponent(tokenHash) + '&type=signup&env=' + (ENV || 'prod');
-        window.location.href = deepLink;
-
-        var continueBtn = document.getElementById('btn-continue-web');
-        continueBtn.addEventListener('click', function() {
-          verifyEmail();
-        });
-
-        // Auto-fallback to web form after 2.5s if app didn't open
-        setTimeout(function() {
-          verifyEmail();
-        }, 2500);
-      } else {
-        verifyEmail();
-      }
-
-      function verifyEmail() {
-        show('state-loading');
-        client.auth.verifyOtp({ token_hash: tokenHash, type: 'signup' }).then(function(result) {
-          if (result.error) {
-            if (result.error.message && result.error.message.indexOf('expired') !== -1) {
-              showError('Lenken har utl\u00f8pt. Pr\u00f8v \u00e5 logge inn i appen for \u00e5 sende en ny lenke.');
-            } else {
-              showError('Lenken er ugyldig eller allerede brukt. Pr\u00f8v \u00e5 logge inn i appen.');
-            }
-            return;
+      // Verifiser OTP på nett (token konsumeres her — ingen race condition med appen)
+      show('state-loading');
+      client.auth.verifyOtp({ token_hash: tokenHash, type: 'signup' }).then(function(result) {
+        if (result.error) {
+          if (result.error.message && result.error.message.indexOf('expired') !== -1) {
+            showError('Lenken har utl\u00f8pt. Pr\u00f8v \u00e5 logge inn i appen for \u00e5 sende en ny lenke.');
+          } else {
+            showError('Lenken er ugyldig eller allerede brukt. Pr\u00f8v \u00e5 logge inn i appen.');
           }
+          return;
+        }
 
-          // Sign out — session should not persist in browser
-          client.auth.signOut();
+        // Sign out — session should not persist in browser
+        client.auth.signOut();
+
+        if (isMobile) {
+          // E-post bekreftet — åpne appen (ingen token trengs, appen oppdaterer sesjonen)
+          show('state-mobile');
+          var scheme = ENV === 'dev' ? 'haul-dev' : 'haul';
+          window.location.href = scheme + ':///email-confirmed';
+
+          // "Fortsett i nettleseren" viser bare suksess (e-post er allerede bekreftet)
+          document.getElementById('btn-continue-web').addEventListener('click', function() {
+            show('state-success');
+          });
+
+          // Fallback: hvis appen ikke åpner innen 2s, vis suksess i nettleseren
+          setTimeout(function() {
+            show('state-success');
+          }, 2000);
+        } else {
           show('state-success');
-        });
-      }
+        }
+      });
     })();
   </script>
 </body>
