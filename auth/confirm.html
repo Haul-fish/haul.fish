@@ -209,40 +209,47 @@
 
       var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-      // Verifiser OTP på nett (token konsumeres her — ingen race condition med appen)
-      show('state-loading');
-      client.auth.verifyOtp({ token_hash: tokenHash, type: 'signup' }).then(function(result) {
-        if (result.error) {
-          if (result.error.message && result.error.message.indexOf('expired') !== -1) {
-            showError('Lenken har utl\u00f8pt. Pr\u00f8v \u00e5 logge inn i appen for \u00e5 sende en ny lenke.');
-          } else {
-            showError('Lenken er ugyldig eller allerede brukt. Pr\u00f8v \u00e5 logge inn i appen.');
-          }
-          return;
-        }
+      if (isMobile) {
+        // Mobil: send token_hash til appen via deep link — appen verifiserer OTP selv.
+        // Å verifisere på web ugyldiggjør appens refresh token (Supabase token rotation).
+        show('state-mobile');
+        var scheme = ENV === 'dev' ? 'haul-dev' : 'haul';
+        window.location.href = scheme + ':///confirm-email?token_hash=' + encodeURIComponent(tokenHash) + '&type=' + encodeURIComponent(type);
 
-        // Sign out locally — do NOT revoke server-side tokens (would invalidate the app's session)
-        client.auth.signOut({ scope: 'local' });
-
-        if (isMobile) {
-          // E-post bekreftet — åpne appen (ingen token trengs, appen oppdaterer sesjonen)
-          show('state-mobile');
-          var scheme = ENV === 'dev' ? 'haul-dev' : 'haul';
-          window.location.href = scheme + ':///confirm-email?verified=true';
-
-          // "Fortsett i nettleseren" viser bare suksess (e-post er allerede bekreftet)
-          document.getElementById('btn-continue-web').addEventListener('click', function() {
-            show('state-success');
+        // "Fortsett i nettleseren": verifiser på web som fallback (f.eks. app ikke installert)
+        document.getElementById('btn-continue-web').addEventListener('click', function() {
+          show('state-loading');
+          client.auth.verifyOtp({ token_hash: tokenHash, type: 'signup' }).then(function(result) {
+            if (result.error) {
+              // Token allerede brukt av appen — e-post er bekreftet
+              show('state-success');
+            } else {
+              client.auth.signOut({ scope: 'local' });
+              show('state-success');
+            }
           });
+        });
 
-          // Fallback: hvis appen ikke åpner innen 2s, vis suksess i nettleseren
-          setTimeout(function() {
-            show('state-success');
-          }, 2000);
-        } else {
+        // Fallback: hvis appen ikke åpner innen 2s, vis suksess-knappen tydeligere
+        setTimeout(function() {
           show('state-success');
-        }
-      });
+        }, 2000);
+      } else {
+        // Desktop: verifiser OTP på nett
+        show('state-loading');
+        client.auth.verifyOtp({ token_hash: tokenHash, type: 'signup' }).then(function(result) {
+          if (result.error) {
+            if (result.error.message && result.error.message.indexOf('expired') !== -1) {
+              showError('Lenken har utl\u00f8pt. Pr\u00f8v \u00e5 logge inn i appen for \u00e5 sende en ny lenke.');
+            } else {
+              showError('Lenken er ugyldig eller allerede brukt. Pr\u00f8v \u00e5 logge inn i appen.');
+            }
+            return;
+          }
+          client.auth.signOut({ scope: 'local' });
+          show('state-success');
+        });
+      }
     })();
   </script>
 </body>
